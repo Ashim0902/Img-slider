@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="slideshow-container">
+
+        <div class="imageSlide fade">
+            <div class="slide-number">1 / 3</div>
+            <img src="img1.png" style="width:100%">
+        </div>
+
+        <div class="imageSlide fade">
+            <div class="slide-number">2 / 3</div>
+            <img src="img2.png" style="width:100%">
+        </div>
+
+        <div class="imageSlide fade">
+            <div class="slide-number">3 / 3</div>
+            <img src="img3.png" style="width:100%">
+        </div>
+    </div>
+
+
+    <div style="text-align:center">
+        <span class="circle" onclick="setCurrentSlide(1)"></span>
+        <span class="circle" onclick="setCurrentSlide(2)"></span>
+        <span class="circle" onclick="setCurrentSlide(3)"></span>
+    </div>
+
+    <script>
+        let currentSlideIndex = 1;
+        displaySlides(currentSlideIndex);
+
+        function changeSlides(step) {
+            displaySlides(currentSlideIndex += step);
+        }
+
+        function setCurrentSlide(slideNumber) {
+            displaySlides(currentSlideIndex = slideNumber);
+        }
+
+        function displaySlides(slideNumber) {
+            let slidesArray = document.getElementsByClassName("imageSlide");
+            let dotsArray = document.getElementsByClassName("circle"); 
+
+            if (slideNumber > slidesArray.length) { currentSlideIndex = 1; }
+            if (slideNumber < 1) { currentSlideIndex = slidesArray.length; }
+
+            for (let i = 0; i < slidesArray.length; i++) {
+                slidesArray[i].style.display = "none";
+            }
+
+            for (let i = 0; i < dotsArray.length; i++) {
+                dotsArray[i].className = dotsArray[i].className.replace(" active", "");
+            }
+
+            slidesArray[currentSlideIndex - 1].style.display = "block";
+            dotsArray[currentSlideIndex - 1].className += " active";
+        }
+
+        function autoSlide() {
+            changeSlides(1);  
+            setTimeout(autoSlide, 3000);  
+        }
+
+        autoSlide();
+
+    </script>
+</body>
+
+</html>
